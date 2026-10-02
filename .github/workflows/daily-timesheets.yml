@@ -1,9 +1,6 @@
 name: Export yesterday's timesheets
 
 on:
-  schedule:
-    - cron: '17 8 * * 1-5'
-      timezone: America/New_York
   workflow_dispatch:
 
 permissions:

@@ -1,6 +1,6 @@
 # Daily Deputy timesheet export
 
-GitHub Actions runs `yesterday_timesheet_ids.py` **Monday through Friday at 8:17 a.m. America/New_York**, including daylight saving changes. It does not run automatically on Saturday or Sunday. Monday exports the previous **Friday, Saturday and Sunday** together; Tuesday through Friday export the previous New York calendar day. It writes timesheet IDs, names and dates to the **Timesheet ID** Google Sheets tab, replacing that tab's previous export. A CSV is also saved as a workflow artifact for seven days. This workflow does not approve timesheets. Manual runs remain available and use the same date selection.
+GitHub Actions runs `yesterday_timesheet_ids.py` when dispatched manually or by your external cron job. There is no built-in schedule. Configure your cron job to trigger Monday through Friday using America/New_York time, skipping Saturday and Sunday. Monday exports the previous **Friday, Saturday and Sunday** together; other days export the previous New York calendar day. It writes timesheet IDs, names and dates to the **Timesheet ID** Google Sheets tab, replacing that tab's previous export. A CSV is also saved as a workflow artifact for seven days. This workflow does not approve timesheets.
 
 ## GitHub setup
 
@@ -16,7 +16,7 @@ GitHub Actions runs `yesterday_timesheet_ids.py` **Monday through Friday at 8:17
 3. Share the spreadsheet with the service account's `client_email` as **Editor**. Enable the Google Sheets and Google Drive APIs in its Google Cloud project if needed.
 4. Open **Actions → Export yesterday's timesheets → Run workflow** to test. Confirm that the **Timesheet ID** tab updates and download the CSV under the run's **Artifacts** section.
 
-The schedule starts after the workflow is on the repository's default branch. GitHub may delay scheduled jobs. Change `cron` in the workflow to choose another local New York time.
+Your external cron job should dispatch `daily-timesheets.yml` on branch `main`. Choose the run time in your cron service; this repository does not set one. Manual runs remain available through **Run workflow**.
 
 The Deputy token must remain valid for unattended runs. If it expires, replace the `DEPUTY_TOKEN` secret; this project does not refresh tokens. Rotate the token previously embedded in `Calculate_time.py` before publishing or enabling automation.
 
