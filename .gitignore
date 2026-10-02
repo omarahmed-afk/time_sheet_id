@@ -1,0 +1,10 @@
+__pycache__/
+.deputy-browser/
+.deputy-ui.*
+reports/
+google_sheets_config.json
+service_account*.json
+timesheetid-*.json
+.env
+.env.*
+tmp*/

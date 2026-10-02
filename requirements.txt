@@ -1,0 +1,4 @@
+requests>=2.32,<3
+openpyxl>=3.1,<4
+gspread>=6.2,<7
+tzdata>=2025.2
