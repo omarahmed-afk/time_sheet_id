@@ -1,6 +1,6 @@
 # Daily Deputy timesheet export
 
-GitHub Actions runs `yesterday_timesheet_ids.py` every day at **8:17 a.m. America/New_York**, including daylight saving changes. It exports the previous New York calendar day's timesheet IDs, names and dates to the **Timesheet ID** Google Sheets tab, replacing that tab's previous export. A CSV is also saved as a workflow artifact for seven days. This workflow does not approve timesheets.
+GitHub Actions runs `yesterday_timesheet_ids.py` **Monday through Friday at 8:17 a.m. America/New_York**, including daylight saving changes. It does not run automatically on Saturday or Sunday. Monday exports the previous **Friday, Saturday and Sunday** together; Tuesday through Friday export the previous New York calendar day. It writes timesheet IDs, names and dates to the **Timesheet ID** Google Sheets tab, replacing that tab's previous export. A CSV is also saved as a workflow artifact for seven days. This workflow does not approve timesheets. Manual runs remain available and use the same date selection.
 
 ## GitHub setup
 

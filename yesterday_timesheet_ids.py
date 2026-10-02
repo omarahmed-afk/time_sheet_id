@@ -1,4 +1,4 @@
-"""Export yesterday's Deputy timesheets to CSV and Google Sheets."""
+"""Export previous days' Deputy timesheets, including Friday-Sunday on Mondays."""
 
 import argparse
 import csv
@@ -73,7 +73,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--csv-only", action="store_true", help="Save CSV without writing to Google Sheets")
     args = parser.parse_args()
-    start_date, _, start, end = target_range("yesterday")
+    start_date, end_date, start, end = target_range(None)
     destination = None if args.csv_only else google_destination(start_date)
     timesheets = query_resource("Timesheet", {"search": {
         "start": {"field": "StartTime", "data": start, "type": "ge"},
@@ -101,9 +101,10 @@ def main():
             metadata_name(timesheet) or names.get(timesheet.get("Employee"), ""),
             to_ny(timesheet["StartTime"]).date().isoformat(),
         ])
-    output = BASE_DIR / "reports" / f"yesterday_{start_date}_timesheet_ids.csv"
+    date_label = str(start_date) if start_date == end_date else f"{start_date}_to_{end_date}"
+    output = BASE_DIR / "reports" / f"yesterday_{date_label}_timesheet_ids.csv"
     output = write_csv(output, rows)
-    print(f"Saved {len(timesheets)} timesheets for {start_date} (New York time): {output}")
+    print(f"Saved {len(timesheets)} timesheets for {date_label} (New York time): {output}")
     if destination:
         write_google_sheet(*destination, rows)
 
